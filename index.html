@@ -268,15 +268,32 @@
       display: grid;
       grid-template-columns: 1fr 2fr;
       gap: 4rem;
-      align-items: start;
+      align-items: center;
+    }
+
+    .about-photo {
+      width: 100%;
+      max-width: 360px;
+      aspect-ratio: 3/4;
+      background: var(--cream-dark);
+      border: 1px solid var(--tan-light);
+      overflow: hidden;
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .about-label {
+      display: block;
       font-size: 0.72rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--tan);
-      padding-top: 0.4rem;
+      margin-bottom: 1rem;
     }
 
     .about-content h2 {
@@ -949,8 +966,11 @@
     </section>
 
     <section class="about-strip">
-      <span class="about-label">About</span>
+      <div class="about-photo">
+        <img src="headshot.jpg" alt="Eugene Seo" />
+      </div>
       <div class="about-content">
+        <span class="about-label">About</span>
         <h2>Strategy, creativity,<br>and a camera.</h2>
         <p>
           Currently working as a digital marketing consultant, I'm transitioning into product management — bringing a user-first mindset, analytical rigor, and a designer's eye. When I'm not thinking about products, I'm out shooting street, landscape, and documentary photography.
