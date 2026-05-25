@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #F5F0E8;
+      --cream-dark: #EDE7D9;
+      --tan: #C9B99A;
+      --tan-light: #E0D4C0;
+      --black: #1A1814;
+      --black-soft: #2C2820;
+      --gray: #6B6560;
+      --gray-light: #9E9890;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--black);
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+    }
+
+    /* Small-caps utility text → monospace accent */
+    .nav-links a,
+    .hero-eyebrow,
+    .btn-primary,
+    .btn-ghost,
+    .hero-tag,
+    .about-label,
+    .section-link,
+    .resume-top-bar a,
+    .resume-top-bar button,
+    .resume-title-line,
+    .resume-section-label,
+    .exp-date,
+    .edu-date,
+    .tag-btn,
+    .skill-tag,
+    .view-btn,
+    .photo-item-tag,
+    .swipe-btn,
+    .swipe-counter,
+    footer p {
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background: rgba(245, 240, 232, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 185, 154, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.25s;
+      font-weight: 400;
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--black); }
+
+    /* ── PAGES ── */
+    .page { display: none; padding-top: 80px; min-height: 100vh; }
+    .page.active { display: block; }
+
+    /* ── HOME PAGE ── */
+    #home {
+      display: none;
+      flex-direction: column;
+    }
+    #home.active { display: flex; }
+
+    .hero {
+      min-height: calc(100vh - 80px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 0 4rem;
+      gap: 4rem;
+    }
+
+    .hero-text { max-width: 540px; }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--tan);
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .hero-title {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(3.2rem, 5vw, 5rem);
+      font-weight: 600;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--tan);
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--gray);
+      margin-bottom: 3rem;
+      max-width: 420px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      background: var(--black);
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 400;
+      transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: var(--black-soft);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.25s;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .btn-ghost:hover { color: var(--black); }
+    .btn-ghost::after { content: '→'; transition: transform 0.2s; }
+    .btn-ghost:hover::after { transform: translateX(3px); }
+
+    .hero-visual {
+      position: relative;
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-photo-frame {
+      width: 100%;
+      height: 100%;
+      background: var(--cream-dark);
+      border: 1px solid var(--tan-light);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    .hero-slide.active { opacity: 1; }
+
+    .hero-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-photo-placeholder {
+      text-align: center;
+      color: var(--gray-light);
+    }
+
+    .hero-photo-placeholder svg {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1rem;
+      opacity: 0.4;
+    }
+
+    .hero-photo-placeholder p {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hero-tag {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      background: rgba(245, 240, 232, 0.9);
+      padding: 0.6rem 1rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+      backdrop-filter: blur(8px);
+    }
+
+    /* About strip */
+    .about-strip {
+      padding: 5rem 4rem;
+      border-top: 1px solid var(--tan-light);
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--tan);
+      padding-top: 0.4rem;
+    }
+
+    .about-content h2 {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-content p {
+      color: var(--gray);
+      line-height: 1.8;
+      max-width: 560px;
+      font-size: 0.95rem;
+    }
+
+    /* Projects strip */
+    .projects-strip {
+      padding: 5rem 4rem;
+      border-top: 1px solid var(--tan-light);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .section-link {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .section-link:hover { color: var(--black); }
+    .section-link::after { content: '→'; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .project-card {
+      background: var(--cream-dark);
+      aspect-ratio: 4/3;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid var(--tan-light);
+    }
+
+    .project-card:hover .project-overlay { opacity: 1; }
+
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(26, 24, 20, 0.85);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .project-overlay h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 0.3rem;
+    }
+
+    .project-overlay p {
+      font-size: 0.72rem;
+      color: var(--tan);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .project-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-light);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── RESUME PAGE ── */
+    #resume {
+      background: var(--cream);
+    }
+
+    .resume-wrapper {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    .resume-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--tan-light);
+    }
+
+    .resume-top-bar a, .resume-top-bar button {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+    }
+
+    .resume-top-bar a:hover, .resume-top-bar button:hover { color: var(--black); }
+
+    .resume-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 3rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .resume-title-line {
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--tan);
+      margin-bottom: 2.5rem;
+    }
+
+    .resume-section {
+      margin-bottom: 3rem;
+    }
+
+    .resume-section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--tan);
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--tan-light);
+    }
+
+    .experience-item {
+      padding: 1.2rem;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      border: 1px solid transparent;
+      border-radius: 2px;
+    }
+
+    .experience-item:hover {
+      background: var(--cream-dark);
+      border-color: var(--tan-light);
+    }
+
+    .experience-item.expanded {
+      background: var(--cream-dark);
+      border-color: var(--tan-light);
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .exp-company {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+
+    .exp-date {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--gray);
+    }
+
+    .exp-role {
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+      margin-top: 0.2rem;
+      margin-bottom: 0;
+    }
+
+    .exp-details {
+      display: none;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--tan-light);
+    }
+
+    .exp-details.open { display: block; }
+
+    .exp-details ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .exp-details ul li {
+      font-size: 0.875rem;
+      line-height: 1.7;
+      color: var(--gray);
+      padding-left: 1rem;
+      position: relative;
+      margin-bottom: 0.4rem;
+    }
+
+    .exp-details ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--tan);
+    }
+
+    .exp-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.8rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--tan);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+
+    .exp-link:hover { color: var(--gray); }
+
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-tag {
+      padding: 0.35rem 0.85rem;
+      border: 1px solid var(--tan-light);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--gray);
+    }
+
+    .edu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--tan-light);
+    }
+
+    .edu-school {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    .edu-degree {
+      font-size: 0.8rem;
+      color: var(--gray);
+      margin-top: 0.15rem;
+    }
+
+    .edu-meta {
+      font-size: 0.75rem;
+      color: var(--gray-light);
+      margin-top: 0.3rem;
+      letter-spacing: 0.04em;
+    }
+
+    .edu-date {
+      font-size: 0.72rem;
+      color: var(--gray-light);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── PHOTOGRAPHY PAGE ── */
+    #photography {
+      background: var(--cream);
+    }
+
+    .photo-wrapper {
+      padding: 3rem 4rem 6rem;
+    }
+
+    .photo-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2.5rem;
+    }
+
+    .photo-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .photo-controls {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .tag-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .tag-btn {
+      padding: 0.3rem 0.9rem;
+      border: 1px solid var(--tan-light);
+      background: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .tag-btn:hover, .tag-btn.active {
+      background: var(--black);
+      color: var(--cream);
+      border-color: var(--black);
+    }
+
+    .view-toggle {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .view-btn {
+      padding: 0.4rem 0.7rem;
+      border: 1px solid var(--tan-light);
+      background: none;
+      cursor: pointer;
+      color: var(--gray);
+      transition: all 0.2s;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .view-btn.active {
+      background: var(--black);
+      color: var(--cream);
+      border-color: var(--black);
+    }
+
+    /* Grid view */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+
+    .gallery-grid.cols-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* Collage view */
+    .gallery-collage {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: 80px;
+      gap: 3px;
+    }
+
+    .gallery-collage .photo-item:nth-child(6n+1) {
+      grid-column: span 5;
+      grid-row: span 4;
+    }
+    .gallery-collage .photo-item:nth-child(6n+2) {
+      grid-column: span 7;
+      grid-row: span 3;
+    }
+    .gallery-collage .photo-item:nth-child(6n+3) {
+      grid-column: span 4;
+      grid-row: span 3;
+    }
+    .gallery-collage .photo-item:nth-child(6n+4) {
+      grid-column: span 3;
+      grid-row: span 4;
+    }
+    .gallery-collage .photo-item:nth-child(6n+5) {
+      grid-column: span 5;
+      grid-row: span 3;
+    }
+    .gallery-collage .photo-item:nth-child(6n+6) {
+      grid-column: span 4;
+      grid-row: span 2;
+    }
+
+    /* Swipe view */
+    .gallery-swipe {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .swipe-track {
+      display: flex;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .swipe-track .photo-item {
+      flex: 0 0 100%;
+      height: 70vh;
+    }
+
+    .swipe-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+
+    .swipe-btn {
+      padding: 0.7rem 1.5rem;
+      background: none;
+      border: 1px solid var(--tan-light);
+      cursor: pointer;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .swipe-btn:hover {
+      background: var(--black);
+      color: var(--cream);
+      border-color: var(--black);
+    }
+
+    .swipe-counter {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.2rem;
+      color: var(--gray);
+    }
+
+    /* Photo item base */
+    .photo-item {
+      background: var(--cream-dark);
+      border: 1px solid var(--tan-light);
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .gallery-grid .photo-item { aspect-ratio: 1; }
+    .gallery-swipe .photo-item { aspect-ratio: unset; }
+
+    .photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-item:hover .photo-item-overlay { opacity: 1; }
+
+    .photo-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(26, 24, 20, 0.6);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1rem;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .photo-item-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--tan);
+      margin-bottom: 0.2rem;
+    }
+
+    .photo-item-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--cream);
+    }
+
+    .photo-placeholder-icon {
+      color: var(--tan-light);
+      opacity: 0.5;
+      text-align: center;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(26, 24, 20, 0.95);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox-inner {
+      max-width: 900px;
+      width: 90vw;
+      text-align: center;
+    }
+
+    .lightbox-img {
+      width: 100%;
+      max-height: 75vh;
+      object-fit: contain;
+      background: #2C2820;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      background: none;
+      border: none;
+      color: var(--cream);
+      font-size: 1.5rem;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+
+    .lightbox-close:hover { opacity: 1; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page.active .hero-text { animation: fadeUp 0.7s ease forwards; }
+    .page.active .hero-visual { animation: fadeUp 0.7s 0.15s ease both; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 4rem;
+      border-top: 1px solid var(--tan-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--gray-light);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero { grid-template-columns: 1fr; padding: 2rem 1.5rem; min-height: auto; }
+      .hero-visual { height: 40vh; }
+      .about-strip, .projects-strip, .photo-wrapper { padding: 3rem 1.5rem; }
+      .about-strip { grid-template-columns: 1fr; gap: 1.5rem; }
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-collage { grid-template-columns: repeat(6, 1fr); }
+      footer { flex-direction: column; gap: 1rem; padding: 1.5rem; }
+      .resume-wrapper { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#" onclick="showPage('home')">Eugene Seo</a>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+      <li><a href="#" onclick="showPage('resume')" id="nav-resume">Résumé</a></li>
+      <li><a href="#" onclick="showPage('photography')" id="nav-photography">Photography</a></li>
+    </ul>
+  </nav>
+
+  <!-- ══════════════ HOME PAGE ══════════════ -->
+  <div id="home" class="page active">
+
+    <section class="hero">
+      <div class="hero-text">
+        <p class="hero-eyebrow">Product · Photography · Strategy</p>
+        <h1 class="hero-title">
+          Building things<br><em>that matter.</em>
+        </h1>
+        <p class="hero-desc">
+          Consultant @ Deloitte Digital and aspiring product manager. I build thoughtful products, shoot meaningful images, and find the intersection of technology and creativity.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="showPage('resume')">View Résumé</button>
+          <button class="btn-ghost" onclick="showPage('photography')">See Photography</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-photo-frame" id="hero-frame">
+          <div class="hero-tag" id="hero-tag"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-strip">
+      <span class="about-label">About</span>
+      <div class="about-content">
+        <h2>Strategy, creativity,<br>and a camera.</h2>
+        <p>
+          Currently working as a digital marketing consultant, I'm transitioning into product management — bringing a user-first mindset, analytical rigor, and a designer's eye. When I'm not thinking about products, I'm out shooting street, landscape, and documentary photography.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 Eugene Seo</p>
+      <p>Built from scratch · Hosted on Vercel</p>
+    </footer>
+
+  </div>
+
+  <!-- ══════════════ RESUME PAGE ══════════════ -->
+  <div id="resume" class="page">
+    <div class="resume-wrapper">
+
+      <div class="resume-top-bar">
+        <a href="https://linkedin.com/in/seoeugene" target="_blank">
+          ↗ LinkedIn
+        </a>
+        <a href="eugene-seo-resume.pdf" download>↓ Download PDF</a>
+      </div>
+
+      <div class="resume-name">Eugene Seo</div>
+      <div class="resume-title-line">Consultant @ Deloitte Digital and Aspiring Product Manager</div>
+
+      <!-- Experience -->
+      <div class="resume-section">
+        <div class="resume-section-label">Experience</div>
+
+        <div class="experience-item" onclick="toggleExp(this)">
+          <div class="exp-header">
+            <span class="exp-company">Deloitte Consulting LLP</span>
+            <span class="exp-date">2024 – Present</span>
+          </div>
+          <div class="exp-role">Analyst · New York, NY</div>
+          <div class="exp-details">
+            <ul>
+              <li>Drove standups with 15+ strategists and developers to align on shifts in design and priorities from new client requests, enabling coordination across 3 countries and early delivery of outputs</li>
+              <li>Defined and prioritized 50+ user stories with 10+ client stakeholders, identified new features to streamline user experience, and conducted UAT testing — enabling developers to pilot an MVP mobile app internally across 10,000 users for a multinational financial services firm</li>
+              <li>Led 15+ interviews with 50+ stakeholders to uncover pain points and nuances, informing the design and pilot of a content lifecycle and governance process for a Fortune 300 fintech company</li>
+              <li>Assessed 120 future products through research and interviews with industry leaders and engineers to identify use cases, user pain points, technical feasibility, and brand synergies — prioritizing 20 briefs for deeper R&D for a global technology conglomerate</li>
+              <li>Designed an agentic AI marketing campaign process and conducted requirements gathering for 3 agent builds for a Fortune 100 company, driving an estimated $4.5M YoY savings</li>
+            </ul>
+            <a class="exp-link" href="#" target="_blank">Visit company ↗</a>
+          </div>
+        </div>
+
+        <div class="experience-item" onclick="toggleExp(this)">
+          <div class="exp-header">
+            <span class="exp-company">Zilo International Group</span>
+            <span class="exp-date">2022 – 2024</span>
+          </div>
+          <div class="exp-role">Analyst · Centennial, CO</div>
+          <div class="exp-details">
+            <ul>
+              <li>Leveraged historical data, conducted market research, and identified KPIs to develop and present work plans for 10+ strategic planning proposals, resulting in the award of 2 projects</li>
+              <li>Drove 6 focus groups with 15+ local organizations to identify priorities and pain points related to housing, engaging 100+ residents to define 5 strategic goals for the year</li>
+              <li>Tabulated 80+ survey responses and analyzed results to create data-based models for a final client deliverable, leading to successful execution of the project scope</li>
+            </ul>
+            <a class="exp-link" href="#" target="_blank">Visit company ↗</a>
+          </div>
+        </div>
+
+        <div class="experience-item" onclick="toggleExp(this)">
+          <div class="exp-header">
+            <span class="exp-company">Liberty in North Korea</span>
+            <span class="exp-date">2022 – 2024</span>
+          </div>
+          <div class="exp-role">President, Fundraising Chair · Ann Arbor, MI</div>
+          <div class="exp-details">
+            <ul>
+              <li>Built partnerships with 10+ student organizations and nonprofits to ideate and organize 3+ joint large-scale fundraising events, raising $5,000+ in combined revenue</li>
+              <li>Managed a 5-person board in devising recruitment strategies, restructuring the organization to foster collaboration, and hosting weekly meetings — leading to 30% growth in membership</li>
+              <li>Forecasted demand and evaluated costs for 10+ fundraisers annually based on historical revenue and on-campus event schedules, raising $3,000+ for charity</li>
+            </ul>
+            <a class="exp-link" href="#" target="_blank">Visit company ↗</a>
+          </div>
+        </div>
+
+        <div class="experience-item" onclick="toggleExp(this)">
+          <div class="exp-header">
+            <span class="exp-company">HS Ad North America</span>
+            <span class="exp-date">2021</span>
+          </div>
+          <div class="exp-role">Marketing Intern · Englewood Cliffs, NJ</div>
+          <div class="exp-details">
+            <ul>
+              <li>Partnered with leaders to create go-to-market strategies and ad campaigns using trend and seasonal data across 10+ channels, driving a 15% sales increase for selected products</li>
+              <li>Created reusable templates and branding guides in PowerPoint to streamline asset creation and ensure brand uniformity across 50+ LG products, facilitating creation of 100+ new assets</li>
+              <li>Optimized product and ad placement at major retailers (Best Buy, etc.) by streamlining performance and campaign data across 300+ products, ensuring on-time launch</li>
+            </ul>
+            <a class="exp-link" href="#" target="_blank">Visit company ↗</a>
+          </div>
+        </div>
+
+        <div class="experience-item" onclick="toggleExp(this)">
+          <div class="exp-header">
+            <span class="exp-company">Polar Investments</span>
+            <span class="exp-date">2020 – 2021</span>
+          </div>
+          <div class="exp-role">Social Media Marketing Intern · New York, NY</div>
+          <div class="exp-details">
+            <ul>
+              <li>Researched market, industry, and growth data to identify short-term investment opportunities, supporting 150+ clients and generating $265,000+ in combined profit</li>
+              <li>Designed and launched 5+ social media campaigns targeting younger audiences through interactive content, acquiring 200+ new clients and driving $6,000+ in monthly revenue growth</li>
+            </ul>
+            <a class="exp-link" href="#" target="_blank">Visit company ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="resume-section">
+        <div class="resume-section-label">Education</div>
+        <div class="edu-item">
+          <div>
+            <div class="edu-school">University of Michigan · Stephen M. Ross School of Business</div>
+            <div class="edu-degree">Bachelor of Business Administration</div>
+            <div class="edu-meta">Activities · Korean Student Association</div>
+          </div>
+          <span class="edu-date">2024</span>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="resume-section">
+        <div class="resume-section-label">Skills & Tools</div>
+        <div class="skills-grid">
+          <span class="skill-tag">Jira</span>
+          <span class="skill-tag">Confluence</span>
+          <span class="skill-tag">Mambu</span>
+          <span class="skill-tag">Outsystems</span>
+          <span class="skill-tag">Agile</span>
+          <span class="skill-tag">C++</span>
+          <span class="skill-tag">Adobe Lightroom</span>
+          <span class="skill-tag">Adobe Photoshop</span>
+        </div>
+      </div>
+
+    </div>
+
+    <footer>
+      <p>© 2026 Eugene Seo</p>
+      <p><a href="https://linkedin.com/in/seoeugene" target="_blank" style="color: var(--gray-light); text-decoration: none;">LinkedIn ↗</a></p>
+    </footer>
+  </div>
+
+  <!-- ══════════════ PHOTOGRAPHY PAGE ══════════════ -->
+  <div id="photography" class="page">
+    <div class="photo-wrapper">
+
+      <div class="photo-header">
+        <h1 class="photo-title">Photography</h1>
+        <div class="photo-controls">
+          <div class="view-toggle">
+            <button class="view-btn active" onclick="setView('grid', this)" title="Grid">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                <rect x="0" y="0" width="6" height="6"/><rect x="8" y="0" width="6" height="6"/>
+                <rect x="0" y="8" width="6" height="6"/><rect x="8" y="8" width="6" height="6"/>
+              </svg>
+            </button>
+            <button class="view-btn" onclick="setView('collage', this)" title="Collage">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                <rect x="0" y="0" width="8" height="9"/><rect x="10" y="0" width="4" height="4"/>
+                <rect x="10" y="6" width="4" height="8"/><rect x="0" y="11" width="8" height="3"/>
+              </svg>
+            </button>
+            <button class="view-btn" onclick="setView('swipe', this)" title="Swipe">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                <rect x="2" y="0" width="10" height="14" rx="1"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tag filters -->
+      <div class="tag-filters">
+        <button class="tag-btn active" onclick="filterTag(this, 'all')">All</button>
+        <button class="tag-btn" onclick="filterTag(this, 'street')">Street</button>
+        <button class="tag-btn" onclick="filterTag(this, 'landscape')">Landscape</button>
+        <button class="tag-btn" onclick="filterTag(this, 'portrait')">Portrait</button>
+        <button class="tag-btn" onclick="filterTag(this, 'japan')">Japan</button>
+        <button class="tag-btn" onclick="filterTag(this, 'korea')">Korea</button>
+        <button class="tag-btn" onclick="filterTag(this, 'night')">Night</button>
+      </div>
+
+      <!-- Gallery (populated by JS from the `photos` array in the script) -->
+      <div id="gallery" class="gallery-grid"></div>
+
+      <!-- Swipe navigation (hidden by default) -->
+      <div id="swipe-nav" class="swipe-nav" style="display:none;">
+        <button class="swipe-btn" onclick="swipeMove(-1)">← Prev</button>
+        <span class="swipe-counter" id="swipe-counter">1 / 12</span>
+        <button class="swipe-btn" onclick="swipeMove(1)">Next →</button>
+      </div>
+
+    </div>
+
+    <footer>
+      <p>© 2026 Eugene Seo </p>
+    </footer>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <div class="lightbox-inner">
+      <div class="lightbox-img" id="lightbox-img" style="height: 60vh; display:flex; align-items:center; justify-content:center;">
+        <span style="font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color: #6B6560;">Photo placeholder</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── PHOTO DATA ──
+    // Add, remove, or edit entries here to update the gallery AND hero carousel.
+    // Set `src` to an image path (e.g., 'images/photo01.jpg') to display a real photo.
+    // Photos with a non-empty `src` automatically appear in the hero carousel.
+    const photos = [
+      { src: 'photos/Canon%20EOS%206D_20230206_042525-2.jpg', tags: 'street night japan',          label: 'Street · Osaka · 2023', title: 'Shinsekai by Night' },
+      { src: 'photos/_MG_0868.jpg',                            tags: 'landscape japan',             label: 'Landscape · Kyoto',     title: 'Fushimi Inari' },
+      { src: 'photos/_MG_3322.jpg',                            tags: 'street japan',                label: 'Street · Tokyo',        title: 'Asakusa, Golden Hour' },
+      { src: 'photos/_MG_3892-5.jpg',                          tags: 'landscape korea',             label: 'Landscape · Busan',     title: 'Window to Busan' },
+      { src: 'photos/_MG_3618-2.jpg',                          tags: 'portrait japan',              label: 'Portrait · Japan',      title: 'The Torchman' },
+      { src: 'photos/_MG_2297.jpg',                            tags: 'street japan',                label: 'Street · Tokyo',        title: 'Harajuku in the Rain' },
+      { src: 'photos/_MG_3012.jpg',                            tags: 'portrait street night japan', label: 'Portrait · Japan',      title: 'Yakitori, by Hand' },
+    ];
+
+    const PHOTO_ICON_SVG = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+      <rect x="3" y="3" width="18" height="18" rx="1"/>
+      <circle cx="8.5" cy="8.5" r="1.5"/>
+      <path d="M21 15l-5-5L5 21"/>
+    </svg>`;
+
+    const HERO_PLACEHOLDER_HTML = `
+      <div class="hero-photo-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <rect x="3" y="3" width="18" height="18" rx="1"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <path d="M21 15l-5-5L5 21"/>
+        </svg>
+        <p>Featured photo</p>
+      </div>
+    `;
+
+    function renderGallery() {
+      const gallery = document.getElementById('gallery');
+      gallery.innerHTML = photos.map((photo, i) => `
+        <div class="photo-item" data-tags="${photo.tags}" onclick="openLightbox(${i})">
+          ${photo.src
+            ? `<img src="${photo.src}" alt="${photo.title}" loading="lazy">`
+            : `<div class="photo-placeholder-icon">${PHOTO_ICON_SVG}</div>`}
+          <div class="photo-item-overlay">
+            <span class="photo-item-tag">${photo.label}</span>
+            <span class="photo-item-title">${photo.title}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderHeroCarousel() {
+      const frame = document.getElementById('hero-frame');
+      const tag = document.getElementById('hero-tag');
+      const carouselPhotos = photos.filter(p => p.src);
+
+      if (carouselPhotos.length === 0) {
+        tag.insertAdjacentHTML('beforebegin', HERO_PLACEHOLDER_HTML);
+        tag.style.display = 'none';
+        return;
+      }
+
+      const slidesHTML = carouselPhotos.map((p, i) => `
+        <div class="hero-slide${i === 0 ? ' active' : ''}">
+          <img src="${p.src}" alt="${p.title}">
+        </div>
+      `).join('');
+      tag.insertAdjacentHTML('beforebegin', slidesHTML);
+      tag.textContent = carouselPhotos[0].label;
+
+      if (carouselPhotos.length > 1) {
+        let i = 0;
+        setInterval(() => {
+          const slides = frame.querySelectorAll('.hero-slide');
+          slides[i].classList.remove('active');
+          i = (i + 1) % slides.length;
+          slides[i].classList.add('active');
+          tag.textContent = carouselPhotos[i].label;
+        }, 5000);
+      }
+    }
+
+    renderGallery();
+    renderHeroCarousel();
+
+    // ── PAGE NAVIGATION ──
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => {
+        p.classList.remove('active');
+        if (p.tagName === 'DIV' && p.id === 'home') p.style.display = 'none';
+      });
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+
+      const page = document.getElementById(id);
+      if (id === 'home') {
+        page.style.display = 'flex';
+      }
+      page.classList.add('active');
+      document.getElementById('nav-' + id).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // ── RESUME EXPAND ──
+    function toggleExp(el) {
+      const details = el.querySelector('.exp-details');
+      const isOpen = details.classList.contains('open');
+      document.querySelectorAll('.exp-details').forEach(d => d.classList.remove('open'));
+      document.querySelectorAll('.experience-item').forEach(i => i.classList.remove('expanded'));
+      if (!isOpen) {
+        details.classList.add('open');
+        el.classList.add('expanded');
+      }
+    }
+
+    // ── GALLERY VIEW TOGGLE ──
+    let currentView = 'grid';
+    let swipeIndex = 0;
+
+    function setView(view, btn) {
+      document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentView = view;
+
+      const gallery = document.getElementById('gallery');
+      const swipeNav = document.getElementById('swipe-nav');
+
+      gallery.className = '';
+      swipeNav.style.display = 'none';
+
+      if (view === 'grid') {
+        gallery.className = 'gallery-grid';
+      } else if (view === 'collage') {
+        gallery.className = 'gallery-collage';
+      } else if (view === 'swipe') {
+        gallery.className = 'gallery-swipe';
+        // Wrap items in swipe track
+        const items = [...gallery.querySelectorAll('.photo-item:not(.hidden)')];
+        let track = gallery.querySelector('.swipe-track');
+        if (!track) {
+          track = document.createElement('div');
+          track.className = 'swipe-track';
+          items.forEach(item => track.appendChild(item));
+          gallery.appendChild(track);
+        }
+        swipeIndex = 0;
+        updateSwipe();
+        swipeNav.style.display = 'flex';
+      }
+    }
+
+    function updateSwipe() {
+      const track = document.querySelector('.swipe-track');
+      if (!track) return;
+      const items = track.querySelectorAll('.photo-item:not(.hidden)');
+      track.style.transform = `translateX(-${swipeIndex * 100}%)`;
+      document.getElementById('swipe-counter').textContent = `${swipeIndex + 1} / ${items.length}`;
+    }
+
+    function swipeMove(dir) {
+      const track = document.querySelector('.swipe-track');
+      if (!track) return;
+      const items = track.querySelectorAll('.photo-item:not(.hidden)');
+      swipeIndex = Math.max(0, Math.min(items.length - 1, swipeIndex + dir));
+      updateSwipe();
+    }
+
+    // ── TAG FILTER ──
+    function filterTag(btn, tag) {
+      document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const items = document.querySelectorAll('.photo-item');
+      items.forEach(item => {
+        const tags = item.dataset.tags || '';
+        if (tag === 'all' || tags.includes(tag)) {
+          item.classList.remove('hidden');
+          item.style.display = '';
+        } else {
+          item.classList.add('hidden');
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    // ── LIGHTBOX ──
+    function openLightbox(index) {
+      document.getElementById('lightbox').classList.add('open');
+    }
+
+    function closeLightbox(e) {
+      if (!e || e.target === document.getElementById('lightbox') || e.target.classList.contains('lightbox-close')) {
+        document.getElementById('lightbox').classList.remove('open');
+      }
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox({ target: document.getElementById('lightbox') });
+    });
+  </script>
+</body>
+</html>
