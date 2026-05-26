@@ -115,7 +115,7 @@
       gap: 4rem;
     }
 
-    .hero-text { max-width: 540px; }
+    .hero-text { max-width: 540px; justify-self: end; margin-right: 3rem; }
 
     .hero-eyebrow {
       font-size: 0.72rem;
@@ -277,7 +277,9 @@
       aspect-ratio: 3/4;
       background: var(--cream-dark);
       border: 1px solid var(--tan-light);
+      border-radius: 16px;
       overflow: hidden;
+      justify-self: end;
     }
 
     .about-photo img {
@@ -900,8 +902,26 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    @keyframes pageIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page.active {
+      animation: pageIn 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
     .page.active .hero-text { animation: fadeUp 0.7s ease forwards; }
     .page.active .hero-visual { animation: fadeUp 0.7s 0.15s ease both; }
+    .page.active .resume-wrapper > * { animation: fadeUp 0.6s ease both; }
+    .page.active .resume-wrapper > *:nth-child(1) { animation-delay: 0.05s; }
+    .page.active .resume-wrapper > *:nth-child(2) { animation-delay: 0.1s; }
+    .page.active .resume-wrapper > *:nth-child(3) { animation-delay: 0.15s; }
+    .page.active .resume-wrapper > *:nth-child(4) { animation-delay: 0.2s; }
+    .page.active .photo-wrapper > * { animation: fadeUp 0.6s ease both; }
+    .page.active .photo-wrapper > *:nth-child(1) { animation-delay: 0.05s; }
+    .page.active .photo-wrapper > *:nth-child(2) { animation-delay: 0.12s; }
+    .page.active .photo-wrapper > *:nth-child(3) { animation-delay: 0.2s; }
 
     /* ── FOOTER ── */
     footer {
@@ -1276,16 +1296,16 @@
 
     // ── PAGE NAVIGATION ──
     function showPage(id) {
+      const page = document.getElementById(id);
+      if (page.classList.contains('active')) return;
+
       document.querySelectorAll('.page').forEach(p => {
         p.classList.remove('active');
         if (p.tagName === 'DIV' && p.id === 'home') p.style.display = 'none';
       });
       document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
 
-      const page = document.getElementById(id);
-      if (id === 'home') {
-        page.style.display = 'flex';
-      }
+      if (id === 'home') page.style.display = 'flex';
       page.classList.add('active');
       document.getElementById('nav-' + id).classList.add('active');
       window.scrollTo(0, 0);
