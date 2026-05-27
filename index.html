@@ -806,6 +806,7 @@
 
     .gallery-grid .photo-item { aspect-ratio: 1; }
     .gallery-swipe .photo-item { aspect-ratio: unset; }
+    .gallery-collage .photo-item { aspect-ratio: unset; }
 
     .photo-item img {
       width: 100%;
@@ -872,13 +873,29 @@
       width: 100%;
       max-height: 75vh;
       object-fit: contain;
-      background: #2C2820;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--gray);
-      font-size: 0.8rem;
-      letter-spacing: 0.1em;
+      display: block;
+    }
+
+    .lightbox-caption {
+      margin-top: 1.25rem;
+      text-align: center;
+    }
+
+    .lightbox-tag {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--tan);
+      margin-bottom: 0.4rem;
+    }
+
+    .lightbox-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--cream);
     }
 
     .lightbox-close {
@@ -1207,8 +1224,10 @@
   <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
     <button class="lightbox-close" onclick="closeLightbox()">✕</button>
     <div class="lightbox-inner">
-      <div class="lightbox-img" id="lightbox-img" style="height: 60vh; display:flex; align-items:center; justify-content:center;">
-        <span style="font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color: #6B6560;">Photo placeholder</span>
+      <img id="lightbox-img" class="lightbox-img" src="" alt="" />
+      <div class="lightbox-caption">
+        <span class="lightbox-tag" id="lightbox-tag"></span>
+        <span class="lightbox-title" id="lightbox-title"></span>
       </div>
     </div>
   </div>
@@ -1335,6 +1354,13 @@
       const gallery = document.getElementById('gallery');
       const swipeNav = document.getElementById('swipe-nav');
 
+      // Unwrap any existing swipe-track so items are direct children of gallery again
+      const existingTrack = gallery.querySelector('.swipe-track');
+      if (existingTrack) {
+        [...existingTrack.children].forEach(item => gallery.appendChild(item));
+        existingTrack.remove();
+      }
+
       gallery.className = '';
       swipeNav.style.display = 'none';
 
@@ -1344,15 +1370,11 @@
         gallery.className = 'gallery-collage';
       } else if (view === 'swipe') {
         gallery.className = 'gallery-swipe';
-        // Wrap items in swipe track
         const items = [...gallery.querySelectorAll('.photo-item:not(.hidden)')];
-        let track = gallery.querySelector('.swipe-track');
-        if (!track) {
-          track = document.createElement('div');
-          track.className = 'swipe-track';
-          items.forEach(item => track.appendChild(item));
-          gallery.appendChild(track);
-        }
+        const track = document.createElement('div');
+        track.className = 'swipe-track';
+        items.forEach(item => track.appendChild(item));
+        gallery.appendChild(track);
         swipeIndex = 0;
         updateSwipe();
         swipeNav.style.display = 'flex';
@@ -1395,6 +1417,13 @@
 
     // ── LIGHTBOX ──
     function openLightbox(index) {
+      const photo = photos[index];
+      if (!photo || !photo.src) return;
+
+      document.getElementById('lightbox-img').src = photo.src;
+      document.getElementById('lightbox-img').alt = photo.title;
+      document.getElementById('lightbox-tag').textContent = photo.label;
+      document.getElementById('lightbox-title').textContent = photo.title;
       document.getElementById('lightbox').classList.add('open');
     }
 
