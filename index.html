@@ -413,6 +413,45 @@
       text-transform: uppercase;
     }
 
+    /* ── PROJECTS PAGE ── */
+    #projects {
+      background: var(--cream);
+    }
+
+    .projects-wrapper {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    .projects-wrapper .section-header {
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--tan-light);
+    }
+
+    .projects-intro {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--gray);
+      max-width: 560px;
+      margin: 2rem 0 3rem;
+    }
+
+    .project-card {
+      text-decoration: none;
+      display: block;
+    }
+
+    /* Overlay is hover-only on pointer devices; always show it on touch
+       so project titles stay readable without a hover state. */
+    @media (hover: none) {
+      .project-overlay {
+        opacity: 1;
+        background: linear-gradient(to top, rgba(26, 24, 20, 0.9), rgba(26, 24, 20, 0) 65%);
+        justify-content: flex-end;
+      }
+    }
+
     /* ── RESUME PAGE ── */
     #resume {
       background: var(--cream);
@@ -939,6 +978,10 @@
     .page.active .photo-wrapper > *:nth-child(1) { animation-delay: 0.05s; }
     .page.active .photo-wrapper > *:nth-child(2) { animation-delay: 0.12s; }
     .page.active .photo-wrapper > *:nth-child(3) { animation-delay: 0.2s; }
+    .page.active .projects-wrapper > * { animation: fadeUp 0.6s ease both; }
+    .page.active .projects-wrapper > *:nth-child(1) { animation-delay: 0.05s; }
+    .page.active .projects-wrapper > *:nth-child(2) { animation-delay: 0.12s; }
+    .page.active .projects-wrapper > *:nth-child(3) { animation-delay: 0.2s; }
 
     /* ── FOOTER ── */
     footer {
@@ -1016,6 +1059,7 @@
     <ul class="nav-links">
       <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
       <li><a href="#" onclick="showPage('resume')" id="nav-resume">Résumé</a></li>
+      <li><a href="#" onclick="showPage('projects')" id="nav-projects">Projects</a></li>
       <li><a href="#" onclick="showPage('photography')" id="nav-photography">Photography</a></li>
     </ul>
   </nav>
@@ -1205,6 +1249,57 @@
     </footer>
   </div>
 
+  <!-- ══════════════ PROJECTS PAGE ══════════════ -->
+  <div id="projects" class="page">
+    <div class="projects-wrapper">
+
+      <div class="section-header">
+        <h1 class="section-title">Projects</h1>
+      </div>
+
+      <p class="projects-intro">
+        A selection of things I've built — products, experiments, and side projects at the
+        intersection of technology, strategy, and design. Edit the cards below to feature your own.
+      </p>
+
+      <!-- Each card links to a live demo or repo. Replace href, title, meta, and the
+           placeholder with an <img src="..."> when you have a thumbnail. -->
+      <div class="projects-grid">
+
+        <a class="project-card" href="#" target="_blank" rel="noopener">
+          <div class="project-placeholder">Add image</div>
+          <div class="project-overlay">
+            <h3>Project One</h3>
+            <p>Role · 2026</p>
+          </div>
+        </a>
+
+        <a class="project-card" href="#" target="_blank" rel="noopener">
+          <div class="project-placeholder">Add image</div>
+          <div class="project-overlay">
+            <h3>Project Two</h3>
+            <p>Role · 2025</p>
+          </div>
+        </a>
+
+        <a class="project-card" href="#" target="_blank" rel="noopener">
+          <div class="project-placeholder">Add image</div>
+          <div class="project-overlay">
+            <h3>Project Three</h3>
+            <p>Role · 2025</p>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+
+    <footer>
+      <p>© 2026 Eugene Seo</p>
+      <p><a href="https://linkedin.com/in/seoeugene" target="_blank" style="color: var(--gray-light); text-decoration: none;">LinkedIn ↗</a></p>
+    </footer>
+  </div>
+
   <!-- ══════════════ PHOTOGRAPHY PAGE ══════════════ -->
   <div id="photography" class="page">
     <div class="photo-wrapper">
@@ -1243,6 +1338,7 @@
         <button class="tag-btn" onclick="filterTag(this, 'japan')">Japan</button>
         <button class="tag-btn" onclick="filterTag(this, 'korea')">Korea</button>
         <button class="tag-btn" onclick="filterTag(this, 'night')">Night</button>
+        <button class="tag-btn" onclick="filterTag(this, 'nyc')">NYC</button>
       </div>
 
       <!-- Gallery (populated by JS from the `photos` array in the script) -->
@@ -1287,6 +1383,8 @@
       { src: 'photos/_MG_3618-2.jpg',                          tags: 'portrait japan',              label: 'Portrait · Japan',      title: 'The Torchman' },
       { src: 'photos/_MG_2297.jpg',                            tags: 'street japan',                label: 'Street · Tokyo',        title: 'Harajuku in the Rain' },
       { src: 'photos/_MG_3012.jpg',                            tags: 'portrait street night japan', label: 'Portrait · Japan',      title: 'Yakitori, by Hand' },
+      { src: 'photos/cottoncandy2.jpg',                         tags: 'street landscape night nyc',  label: 'Street · New York · 2017', title: 'Manhattan Bridge at Dusk' },
+      { src: 'photos/ilovemyparents.jpg',                       tags: 'portrait',                    label: 'Portrait · 2017',           title: 'Mom & Dad' },
     ];
 
     const PHOTO_ICON_SVG = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
