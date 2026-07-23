@@ -452,6 +452,22 @@
       }
     }
 
+    /* ── PROJECT DETAIL PAGE ── (reuses .resume-wrapper/.resume-top-bar/.skills-grid) */
+    .project-detail-stack {
+      margin: 1.5rem 0 2rem;
+    }
+
+    .project-detail-body {
+      margin-bottom: 2.5rem;
+    }
+
+    .project-detail-body p {
+      color: var(--gray);
+      line-height: 1.8;
+      font-size: 0.95rem;
+      margin-bottom: 1.2rem;
+    }
+
     /* ── RESUME PAGE ── */
     #resume {
       background: var(--cream);
@@ -1262,27 +1278,35 @@
         intersection of technology, strategy, and design.
       </p>
 
-      <!-- Each card links to a live demo or repo. Replace href, title, meta, and the
-           placeholder with an <img src="..."> when you have a thumbnail. -->
-      <div class="projects-grid">
+      <!-- Populated by JS from the `projects` array in the script. Click a card
+           to open its detail page (description + link to the GitHub repo). -->
+      <div id="projects-grid" class="projects-grid"></div>
 
-        <a class="project-card" href="https://eugeneinbarcelona.vercel.app" target="_blank" rel="noopener">
-          <div class="project-placeholder">Add image</div>
-          <div class="project-overlay">
-            <h3>Barcelona Itinerary</h3>
-            <p>Personal Site · 2026</p>
-          </div>
-        </a>
+    </div>
 
-        <a class="project-card" href="https://github.com/eugthekid/discord-checkout-tracker" target="_blank" rel="noopener">
-          <div class="project-placeholder">Add image</div>
-          <div class="project-overlay">
-            <h3>Discord Checkout Tracker</h3>
-            <p>Bot · 2026</p>
-          </div>
-        </a>
+    <footer>
+      <p>© 2026 Eugene Seo</p>
+      <p><a href="https://linkedin.com/in/seoeugene" target="_blank" style="color: var(--gray-light); text-decoration: none;">LinkedIn ↗</a></p>
+    </footer>
+  </div>
 
+  <!-- ══════════════ PROJECT DETAIL PAGE ══════════════ -->
+  <div id="project-detail" class="page">
+    <div class="resume-wrapper">
+
+      <div class="resume-top-bar">
+        <a href="#" onclick="showPage('projects')">← All Projects</a>
+        <a id="project-detail-repo" href="#" target="_blank" rel="noopener">View on GitHub ↗</a>
       </div>
+
+      <div class="resume-name" id="project-detail-title"></div>
+      <div class="resume-title-line" id="project-detail-meta"></div>
+
+      <div class="skills-grid project-detail-stack" id="project-detail-stack"></div>
+
+      <div class="project-detail-body" id="project-detail-body"></div>
+
+      <a class="btn-primary" id="project-detail-live" href="#" target="_blank" rel="noopener" style="display:none;">View Live Site</a>
 
     </div>
 
@@ -1363,6 +1387,39 @@
   </div>
 
   <script>
+    // ── PROJECT DATA ──
+    // Add, remove, or edit entries here to update the Projects grid AND detail pages.
+    // `live` is optional — omit it (or set to null) for projects with no public site.
+    const projects = [
+      {
+        slug: 'barcelona',
+        title: 'Barcelona Itinerary',
+        meta: 'Personal Site · 2026',
+        stack: ['HTML/CSS/JS', 'Vercel'],
+        repo: 'https://github.com/eugthekid/barcelona-itinerary',
+        live: 'https://eugeneinbarcelona.vercel.app',
+        description: [
+          "A single-page, tab-based trip itinerary built for a Barcelona trip (June 30 – July 4, 2026) — one static index.html, no build step, no framework, no dependencies.",
+          "Each day of the trip gets its own tab (Overview, Tue–Sat, plus reference tabs for Attractions, Shopping, and Food) so plans stay easy to scan on a phone while walking between places, instead of scrolling a shared doc.",
+          "Deployed as a static site on Vercel with clean URLs — drag-and-drop deploy, no server, no config beyond disabling trailing slashes.",
+        ],
+      },
+      {
+        slug: 'discord-checkout-tracker',
+        title: 'Discord Checkout Tracker',
+        meta: 'Bot · 2026',
+        stack: ['Python', 'discord.py', 'SQLite', 'openpyxl'],
+        repo: 'https://github.com/eugthekid/discord-checkout-tracker',
+        live: null,
+        description: [
+          "I run a small sneaker/collectible reselling operation. My checkout software already posted a “Successfully Checked Out” card into a private Discord channel on every purchase — but those records were trapped in chat, impossible to total or filter.",
+          "This bot reads that channel, backfills its full history on startup, and saves every checkout into a local SQLite database keyed on Discord's message ID — so re-scanning history can never create duplicate rows.",
+          "It adds two slash commands: /export, which returns a filtered, formatted Excel workbook (by profile, site, module, date range, or free text), and /stats, which replies instantly with total checkouts, total spend, average order value, and top profiles/sites.",
+          "It turned a scroll-and-guess chat log into a queryable record of what I bought, for how much, and on which profile.",
+        ],
+      },
+    ];
+
     // ── PHOTO DATA ──
     // Add, remove, or edit entries here to update the gallery AND hero carousel.
     // Set `src` to an image path (e.g., 'images/photo01.jpg') to display a real photo.
@@ -1442,8 +1499,48 @@
       }
     }
 
+    // ── PROJECT CARDS + DETAIL PAGE ──
+    function renderProjectCards() {
+      const grid = document.getElementById('projects-grid');
+      grid.innerHTML = projects.map(p => `
+        <div class="project-card" onclick="openProject('${p.slug}')">
+          <div class="project-placeholder">Add image</div>
+          <div class="project-overlay">
+            <h3>${p.title}</h3>
+            <p>${p.meta}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openProject(slug) {
+      const p = projects.find(x => x.slug === slug);
+      if (!p) return;
+
+      document.getElementById('project-detail-title').textContent = p.title;
+      document.getElementById('project-detail-meta').textContent = p.meta;
+      document.getElementById('project-detail-stack').innerHTML =
+        p.stack.map(s => `<span class="skill-tag">${s}</span>`).join('');
+      document.getElementById('project-detail-body').innerHTML =
+        p.description.map(paragraph => `<p>${paragraph}</p>`).join('');
+
+      const repoLink = document.getElementById('project-detail-repo');
+      repoLink.href = p.repo;
+
+      const liveBtn = document.getElementById('project-detail-live');
+      if (p.live) {
+        liveBtn.href = p.live;
+        liveBtn.style.display = '';
+      } else {
+        liveBtn.style.display = 'none';
+      }
+
+      showPage('project-detail');
+    }
+
     renderGallery();
     renderHeroCarousel();
+    renderProjectCards();
 
     // ── PAGE NAVIGATION ──
     function showPage(id) {
@@ -1458,7 +1555,12 @@
 
       if (id === 'home') page.style.display = 'flex';
       page.classList.add('active');
-      document.getElementById('nav-' + id).classList.add('active');
+
+      // Project detail pages aren't in the nav; keep "Projects" highlighted for them.
+      const navId = id === 'project-detail' ? 'projects' : id;
+      const navEl = document.getElementById('nav-' + navId);
+      if (navEl) navEl.classList.add('active');
+
       window.scrollTo(0, 0);
     }
 
