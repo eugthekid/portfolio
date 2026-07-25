@@ -49,6 +49,8 @@
     .photo-item-tag,
     .swipe-btn,
     .swipe-counter,
+    .project-action-btn,
+    .project-caption p,
     footer p {
       font-family: 'DM Mono', monospace;
     }
@@ -360,46 +362,32 @@
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
+      gap: 1.75rem;
     }
 
     .project-card {
       background: var(--cream-dark);
-      aspect-ratio: 4/3;
-      position: relative;
-      overflow: hidden;
       cursor: pointer;
       border: 1px solid var(--tan-light);
+      text-decoration: none;
+      display: block;
     }
 
-    .project-card:hover .project-overlay { opacity: 1; }
-
-    .project-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(26, 24, 20, 0.85);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 1.5rem;
-      opacity: 0;
-      transition: opacity 0.3s;
+    .project-thumb {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
     }
 
-    .project-overlay h3 {
-      font-family: 'Inter', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 400;
-      color: var(--cream);
-      margin-bottom: 0.3rem;
+    .project-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: filter 0.35s ease;
     }
 
-    .project-overlay p {
-      font-size: 0.72rem;
-      color: var(--tan);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
+    .project-card:hover .project-thumb img { filter: blur(6px) brightness(0.7); }
 
     .project-placeholder {
       width: 100%;
@@ -409,6 +397,62 @@
       justify-content: center;
       color: var(--gray-light);
       font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: filter 0.35s ease;
+    }
+
+    .project-card:hover .project-placeholder { filter: blur(6px) brightness(0.7); }
+
+    /* Hover-revealed action buttons (link out + open detail page) */
+    .project-actions {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      padding: 0 1rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-card:hover .project-actions { opacity: 1; }
+
+    .project-action-btn {
+      padding: 0.6rem 1.1rem;
+      background: var(--cream);
+      color: var(--black);
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .project-action-btn:hover {
+      background: var(--tan-light);
+      transform: translateY(-1px);
+    }
+
+    .project-caption {
+      padding: 1rem 1.1rem 1.1rem;
+    }
+
+    .project-caption h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .project-caption p {
+      font-size: 0.7rem;
+      color: var(--gray);
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
@@ -437,18 +481,16 @@
       margin: 2rem 0 3rem;
     }
 
-    .project-card {
-      text-decoration: none;
-      display: block;
-    }
-
-    /* Overlay is hover-only on pointer devices; always show it on touch
-       so project titles stay readable without a hover state. */
+    /* Blur + actions are hover-only on pointer devices; always show them on
+       touch (no hover state) so the buttons stay reachable by tap. */
     @media (hover: none) {
-      .project-overlay {
+      .project-thumb img,
+      .project-placeholder {
+        filter: blur(3px) brightness(0.8);
+      }
+      .project-actions {
         opacity: 1;
-        background: linear-gradient(to top, rgba(26, 24, 20, 0.9), rgba(26, 24, 20, 0) 65%);
-        justify-content: flex-end;
+        background: rgba(26, 24, 20, 0.15);
       }
     }
 
@@ -1395,6 +1437,7 @@
         slug: 'barcelona',
         title: 'Barcelona Itinerary',
         meta: 'Personal Site · 2026',
+        thumb: 'project-thumbs/barcelona.jpg',
         stack: ['HTML/CSS/JS', 'Vercel'],
         repo: 'https://github.com/eugthekid/barcelona-itinerary',
         live: 'https://eugeneinbarcelona.vercel.app',
@@ -1408,6 +1451,7 @@
         slug: 'discord-checkout-tracker',
         title: 'Discord Checkout Tracker',
         meta: 'Bot · 2026',
+        thumb: 'project-thumbs/discord-checkout-tracker.jpg',
         stack: ['Python', 'discord.py', 'SQLite', 'openpyxl'],
         repo: 'https://github.com/eugthekid/discord-checkout-tracker',
         live: null,
@@ -1502,15 +1546,27 @@
     // ── PROJECT CARDS + DETAIL PAGE ──
     function renderProjectCards() {
       const grid = document.getElementById('projects-grid');
-      grid.innerHTML = projects.map(p => `
+      grid.innerHTML = projects.map(p => {
+        const linkUrl = p.live || p.repo;
+        const linkLabel = p.live ? 'Visit Site ↗' : 'View Repo ↗';
+        return `
         <div class="project-card" onclick="openProject('${p.slug}')">
-          <div class="project-placeholder">Add image</div>
-          <div class="project-overlay">
+          <div class="project-thumb">
+            ${p.thumb
+              ? `<img src="${p.thumb}" alt="${p.title}" loading="lazy">`
+              : `<div class="project-placeholder">Add image</div>`}
+            <div class="project-actions">
+              <a class="project-action-btn" href="${linkUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${linkLabel}</a>
+              <button class="project-action-btn" onclick="event.stopPropagation(); openProject('${p.slug}')">Project Details</button>
+            </div>
+          </div>
+          <div class="project-caption">
             <h3>${p.title}</h3>
             <p>${p.meta}</p>
           </div>
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
 
     function openProject(slug) {
