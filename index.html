@@ -3,7 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio</title>
+  <title>Eugene's Portfolio</title>
+  <meta name="description" content="Eugene Seo is a consultant at Deloitte Digital and an aspiring product manager. Projects, résumé, and street photography from Japan, Korea, and New York." />
+  <meta name="theme-color" content="#F5F0E8" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231A1814'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-style='italic' font-weight='700' font-size='32' text-anchor='middle' fill='%23F5F0E8'%3EES%3C/text%3E%3C/svg%3E" />
+
+  <!-- Link previews (LinkedIn, iMessage, Slack, etc.) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Eugene Seo" />
+  <meta property="og:title" content="Eugene's Portfolio" />
+  <meta property="og:description" content="Projects, résumé, and photography from a Deloitte Digital consultant moving into product." />
+  <meta property="og:url" content="https://eugeneseo.vercel.app/" />
+  <meta property="og:image" content="https://eugeneseo.vercel.app/headshot.jpg" />
+  <meta name="twitter:card" content="summary" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Albert+Sans:wght@300..800&family=Fraunces:ital,wght@1,500;1,600;1,700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -20,6 +35,12 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html { scroll-behavior: smooth; }
+
+    /* Keyboard focus ring — only shows for keyboard users, not mouse clicks */
+    :focus-visible {
+      outline: 2px solid var(--black-soft);
+      outline-offset: 3px;
+    }
 
     body {
       background: var(--cream);
@@ -469,19 +490,41 @@
     }
 
     .about-cta {
-      margin-top: 1.5rem;
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: 1.9rem;
+      color: var(--black);
+      margin: 1.5rem 0 1.1rem;
     }
 
-    .about-cta a {
-      color: inherit;
-      text-decoration: none;
-      border-bottom: 2px solid var(--tan-light);
-      transition: border-color 0.2s, color 0.2s;
+    .contact-icons {
+      display: flex;
+      gap: 0.7rem;
     }
 
-    .about-cta a:hover {
+    .contact-icon-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--cream-dark);
+      border: 1px solid var(--tan-light);
       color: var(--black-soft);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .contact-icon-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .contact-icon-btn:hover {
       border-color: var(--tan);
+      box-shadow: 0 0 0 1px rgba(74,56,38,0.06), 0 10px 22px -14px rgba(74,56,38,0.35);
+      transform: translateY(-1px);
     }
 
     /* Projects strip */
@@ -537,7 +580,8 @@
       transition: filter 0.35s ease;
     }
 
-    .project-card:hover .project-thumb img { filter: blur(6px) brightness(0.7); }
+    .project-card:hover .project-thumb img,
+    .project-card:focus-within .project-thumb img { filter: blur(6px) brightness(0.7); }
 
     .project-placeholder {
       width: 100%;
@@ -568,7 +612,8 @@
       transition: opacity 0.3s ease;
     }
 
-    .project-card:hover .project-actions { opacity: 1; }
+    .project-card:hover .project-actions,
+    .project-card:focus-within .project-actions { opacity: 1; }
 
     .project-action-btn {
       padding: 0.6rem 1.1rem;
@@ -1042,7 +1087,8 @@
       display: block;
     }
 
-    .photo-item:hover .photo-item-overlay { opacity: 1; }
+    .photo-item:hover .photo-item-overlay,
+    .photo-item:focus-visible .photo-item-overlay { opacity: 1; }
 
     .photo-item-overlay {
       position: absolute;
@@ -1300,14 +1346,22 @@
     <section class="about-section">
       <div class="about-strip">
         <div class="about-photo reveal">
-          <img src="headshot.jpg" alt="Eugene Seo" />
+          <img src="headshot.jpg" alt="Eugene Seo" width="1466" height="2200" fetchpriority="high" decoding="async" />
         </div>
         <div class="about-content reveal">
           <span class="about-label">About</span>
           <h2>Hi, I'm Eugene.</h2>
           <p>I'm currently a consultant at Deloitte Digital, helping global companies transform their marketing organizations and prepare for the AI-driven future. I'm looking to dive deeper into the world of product — leveraging my strategic background, user-focused mindset, and creative eye.</p>
           <p>On the weekends, I'm exploring cities around the world, capturing their essence one photograph at a time.</p>
-          <h2 class="about-cta"><a href="mailto:eseo@umich.edu">Let's chat!</a></h2>
+          <h2 class="about-cta">Let's chat!</h2>
+          <div class="contact-icons">
+            <a class="contact-icon-btn" href="https://linkedin.com/in/seoeugene" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.24h4V23h-4V8.24zM8.5 8.24h3.83v2.02h.05c.53-1 1.84-2.06 3.79-2.06 4.06 0 4.81 2.67 4.81 6.14V23h-4v-6.9c0-1.65-.03-3.77-2.3-3.77-2.3 0-2.65 1.8-2.65 3.65V23h-4V8.24z"/></svg>
+            </a>
+            <a class="contact-icon-btn" href="mailto:eseo@umich.edu" aria-label="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="m1 6 11 8 11-8"/></svg>
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -1332,8 +1386,8 @@
               <div class="hero-dot green"></div>
             </div>
             <div class="hero-window-body">
-              <img src="project-thumbs/barcelona.jpg" class="active" alt="Barcelona Itinerary">
-              <img src="project-thumbs/discord-checkout-tracker.jpg" alt="Discord Checkout Tracker">
+              <img src="project-thumbs/barcelona.jpg" class="active" alt="Barcelona Itinerary" width="900" height="675" loading="lazy" decoding="async">
+              <img src="project-thumbs/discord-checkout-tracker.jpg" alt="Discord Checkout Tracker" width="900" height="675" loading="lazy" decoding="async">
               <div class="hero-window-actions"><span class="hero-window-btn">View Work</span></div>
             </div>
           </a>
@@ -1357,9 +1411,9 @@
               <div class="hero-dot green"></div>
             </div>
             <div class="hero-window-body">
-              <img src="photos/_MG_0868.jpg" class="active" alt="Fushimi Inari, Kyoto">
-              <img src="photos/Canon%20EOS%206D_20230206_042525-2.jpg" alt="Shinsekai by night, Osaka">
-              <img src="photos/_MG_3618-2.jpg" alt="The Torchman, Japan">
+              <img src="photos/_MG_0868.jpg" class="active" alt="Fushimi Inari, Kyoto" width="1466" height="2200" loading="lazy" decoding="async">
+              <img src="photos/Canon%20EOS%206D_20230206_042525-2.jpg" alt="Shinsekai by night, Osaka" width="2200" height="1466" loading="lazy" decoding="async">
+              <img src="photos/_MG_3618-2.jpg" alt="The Torchman, Japan" width="1466" height="2200" loading="lazy" decoding="async">
               <div class="hero-window-actions"><span class="hero-window-btn">View Photography</span></div>
             </div>
           </a>
@@ -1380,7 +1434,7 @@
     <div class="resume-wrapper">
 
       <div class="resume-top-bar">
-        <a href="https://linkedin.com/in/seoeugene" target="_blank">LinkedIn ↗</a>
+        <a href="https://linkedin.com/in/seoeugene" target="_blank" rel="noopener">LinkedIn ↗</a>
         <a href="eugene-seo-resume.pdf" download>Download Resume ↗</a>
       </div>
 
@@ -1401,7 +1455,7 @@
         <div class="resume-section-label">Experience</div>
 
         <div class="experience-item" onclick="toggleExp(this)">
-          <div class="exp-header">
+          <div class="exp-header" role="button" tabindex="0" aria-expanded="false">
             <span class="exp-company">Deloitte Digital</span>
             <span class="exp-date">2024 – Present</span>
           </div>
@@ -1419,7 +1473,7 @@
         </div>
 
         <div class="experience-item" onclick="toggleExp(this)">
-          <div class="exp-header">
+          <div class="exp-header" role="button" tabindex="0" aria-expanded="false">
             <span class="exp-company">Zilo International Group</span>
             <span class="exp-date">2022 – 2024</span>
           </div>
@@ -1435,7 +1489,7 @@
         </div>
 
         <div class="experience-item" onclick="toggleExp(this)">
-          <div class="exp-header">
+          <div class="exp-header" role="button" tabindex="0" aria-expanded="false">
             <span class="exp-company">HS Ad North America</span>
             <span class="exp-date">2021</span>
           </div>
@@ -1451,7 +1505,7 @@
         </div>
 
         <div class="experience-item" onclick="toggleExp(this)">
-          <div class="exp-header">
+          <div class="exp-header" role="button" tabindex="0" aria-expanded="false">
             <span class="exp-company">Polar Investments</span>
             <span class="exp-date">2020 – 2021</span>
           </div>
@@ -1461,7 +1515,6 @@
               <li>Researched market, industry, and growth data to identify short-term investment opportunities, supporting 150+ clients and generating $265,000+ in combined profit</li>
               <li>Designed and launched 5+ social media campaigns targeting younger audiences through interactive content, acquiring 200+ new clients and driving $6,000+ in monthly revenue growth</li>
             </ul>
-            <a class="exp-link" href="#" target="_blank">Visit company ↗</a>
           </div>
         </div>
       </div>
@@ -1484,7 +1537,7 @@
         <div class="resume-section-label">Leadership</div>
 
         <div class="experience-item" onclick="toggleExp(this)">
-          <div class="exp-header">
+          <div class="exp-header" role="button" tabindex="0" aria-expanded="false">
             <span class="exp-company">Liberty in North Korea</span>
             <span class="exp-date">2022 – 2024</span>
           </div>
@@ -1519,7 +1572,7 @@
 
     <footer>
       <p>© 2026 Eugene Seo</p>
-      <p><a href="https://linkedin.com/in/seoeugene" target="_blank" style="color: var(--gray-light); text-decoration: none;">LinkedIn ↗</a></p>
+      <p><a href="https://linkedin.com/in/seoeugene" target="_blank" rel="noopener" style="color: var(--gray-light); text-decoration: none;">LinkedIn ↗</a></p>
     </footer>
   </div>
 
@@ -1545,7 +1598,7 @@
 
     <footer>
       <p>© 2026 Eugene Seo</p>
-      <p><a href="https://linkedin.com/in/seoeugene" target="_blank" style="color: var(--gray-light); text-decoration: none;">LinkedIn ↗</a></p>
+      <p><a href="https://linkedin.com/in/seoeugene" target="_blank" rel="noopener" style="color: var(--gray-light); text-decoration: none;">LinkedIn ↗</a></p>
     </footer>
   </div>
 
@@ -1557,19 +1610,19 @@
         <h1 class="photo-title">Photography</h1>
         <div class="photo-controls">
           <div class="view-toggle">
-            <button class="view-btn active" onclick="setView('grid', this)" title="Grid">
+            <button class="view-btn active" onclick="setView('grid', this)" title="Grid" aria-label="Grid view">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
                 <rect x="0" y="0" width="6" height="6"/><rect x="8" y="0" width="6" height="6"/>
                 <rect x="0" y="8" width="6" height="6"/><rect x="8" y="8" width="6" height="6"/>
               </svg>
             </button>
-            <button class="view-btn" onclick="setView('collage', this)" title="Collage">
+            <button class="view-btn" onclick="setView('collage', this)" title="Collage" aria-label="Collage view">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
                 <rect x="0" y="0" width="8" height="9"/><rect x="10" y="0" width="4" height="4"/>
                 <rect x="10" y="6" width="4" height="8"/><rect x="0" y="11" width="8" height="3"/>
               </svg>
             </button>
-            <button class="view-btn" onclick="setView('swipe', this)" title="Swipe">
+            <button class="view-btn" onclick="setView('swipe', this)" title="Swipe" aria-label="Swipe view">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
                 <rect x="2" y="0" width="10" height="14" rx="1"/>
               </svg>
@@ -1596,20 +1649,20 @@
       <!-- Swipe navigation (hidden by default) -->
       <div id="swipe-nav" class="swipe-nav" style="display:none;">
         <button class="swipe-btn" onclick="swipeMove(-1)">← Prev</button>
-        <span class="swipe-counter" id="swipe-counter">1 / 12</span>
+        <span class="swipe-counter" id="swipe-counter"></span>
         <button class="swipe-btn" onclick="swipeMove(1)">Next →</button>
       </div>
 
     </div>
 
     <footer>
-      <p>© 2026 Eugene Seo </p>
+      <p>© 2026 Eugene Seo</p>
     </footer>
   </div>
 
   <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
-    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">✕</button>
     <div class="lightbox-inner">
       <img id="lightbox-img" class="lightbox-img" src="" alt="" />
       <div class="lightbox-caption">
@@ -1680,9 +1733,9 @@
     function renderGallery() {
       const gallery = document.getElementById('gallery');
       gallery.innerHTML = photos.map((photo, i) => `
-        <div class="photo-item" data-tags="${photo.tags}" onclick="openLightbox(${i})">
+        <div class="photo-item" data-tags="${photo.tags}" role="button" tabindex="0" aria-label="View ${photo.title}" onclick="openLightbox(${i})">
           ${photo.src
-            ? `<img src="${photo.src}" alt="${photo.title}" loading="lazy">`
+            ? `<img src="${photo.src}" alt="${photo.title}" loading="lazy" decoding="async">`
             : `<div class="photo-placeholder-icon">${PHOTO_ICON_SVG}</div>`}
           <div class="photo-item-overlay">
             <span class="photo-item-tag">${photo.label}</span>
@@ -1707,7 +1760,7 @@
           </div>
           <div class="project-thumb">
             ${p.thumb
-              ? `<img src="${p.thumb}" alt="${p.title}" loading="lazy">`
+              ? `<img src="${p.thumb}" alt="${p.title}" width="900" height="675" loading="lazy" decoding="async">`
               : `<div class="project-placeholder">Add image</div>`}
             <div class="project-actions">
               <a class="project-action-btn" href="${linkUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${linkLabel}</a>
@@ -1848,11 +1901,22 @@
       const isOpen = details.classList.contains('open');
       document.querySelectorAll('.exp-details').forEach(d => d.classList.remove('open'));
       document.querySelectorAll('.experience-item').forEach(i => i.classList.remove('expanded'));
+      document.querySelectorAll('.exp-header').forEach(h => h.setAttribute('aria-expanded', 'false'));
       if (!isOpen) {
         details.classList.add('open');
         el.classList.add('expanded');
+        el.querySelector('.exp-header').setAttribute('aria-expanded', 'true');
       }
     }
+
+    // Enter / Space on a focused résumé header or gallery tile acts like a click
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const target = e.target.closest('.exp-header, .photo-item');
+      if (!target || e.target !== target) return;
+      e.preventDefault();
+      target.click();
+    });
 
     // ── GALLERY VIEW TOGGLE ──
     let currentView = 'grid';
