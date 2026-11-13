@@ -1386,8 +1386,8 @@
               <div class="hero-dot green"></div>
             </div>
             <div class="hero-window-body">
-              <img src="project-thumbs/barcelona.jpg" class="active" alt="Barcelona Itinerary" width="900" height="675" loading="lazy" decoding="async">
-              <img src="project-thumbs/discord-checkout-tracker.jpg" alt="Discord Checkout Tracker" width="900" height="675" loading="lazy" decoding="async">
+              <img src="project-thumbs/cache.jpg" class="active" alt="Cache inventory tracker" width="900" height="675" loading="lazy" decoding="async">
+              <img src="project-thumbs/barcelona.jpg" alt="Barcelona Itinerary" width="900" height="675" loading="lazy" decoding="async">
               <div class="hero-window-actions"><span class="hero-window-btn">View Work</span></div>
             </div>
           </a>
@@ -1678,6 +1678,21 @@
     // `live` is optional — omit it (or set to null) for projects with no public site.
     const projects = [
       {
+        slug: 'cache',
+        title: 'Cache',
+        meta: 'Desktop App · 2026',
+        thumb: 'project-thumbs/cache.jpg',
+        stack: ['Electron', 'React', 'TypeScript', 'FastAPI', 'SQLite'],
+        repo: 'https://github.com/eugthekid/cache',
+        live: null,
+        description: [
+          "I resell trading cards and collectibles on the side, and my purchases were scattered across retailer emails, Discord checkout bots, and spreadsheets — so I never had a clear answer to what I owned, what was still in transit, or what a sale actually earned me.",
+          "Cache is a desktop app that pulls all of it into one place. It reads order, shipping, and cancellation emails, turns them into orders and individual inventory units, and follows each unit from ordered to in hand to sold. The dashboard leads with profit — revenue, spend, and ROI, broken down by category and sales channel.",
+          "Most of the work was product thinking. Email is the source of truth for money and order status, while Discord captures the attempt (including failed checkouts that email never sees) — so whichever arrives first creates the order and the other enriches it. I rebuilt the dashboard around what I actually check, and pooled inventory counts per product instead of tracking every unit by hand.",
+          "Under the hood it is an Electron and React front end over a local FastAPI and SQLite backend, with live carrier tracking, automatic grouping of product variants, and a data model designed so a hosted or mobile version wouldn't need a rewrite. It grew out of my earlier Discord checkout-tracking bot and runs on my own real orders.",
+        ],
+      },
+      {
         slug: 'barcelona',
         title: 'Barcelona Itinerary',
         meta: 'Personal Site · 2026',
@@ -1689,21 +1704,6 @@
           "A single-page, tab-based trip itinerary built for a Barcelona trip (June 30 – July 4, 2026) — one static index.html, no build step, no framework, no dependencies.",
           "Each day of the trip gets its own tab (Overview, Tue–Sat, plus reference tabs for Attractions, Shopping, and Food) so plans stay easy to scan on a phone while walking between places, instead of scrolling a shared doc.",
           "Deployed as a static site on Vercel with clean URLs — drag-and-drop deploy, no server, no config beyond disabling trailing slashes.",
-        ],
-      },
-      {
-        slug: 'discord-checkout-tracker',
-        title: 'Discord Checkout Tracker',
-        meta: 'Bot · 2026',
-        thumb: 'project-thumbs/discord-checkout-tracker.jpg',
-        stack: ['Python', 'discord.py', 'SQLite', 'openpyxl'],
-        repo: 'https://github.com/eugthekid/discord-checkout-tracker',
-        live: null,
-        description: [
-          "I run a small sneaker/collectible reselling operation. My checkout software already posted a “Successfully Checked Out” card into a private Discord channel on every purchase — but those records were trapped in chat, impossible to total or filter.",
-          "This bot reads that channel, backfills its full history on startup, and saves every checkout into a local SQLite database keyed on Discord's message ID — so re-scanning history can never create duplicate rows.",
-          "It adds two slash commands: /export, which returns a filtered, formatted Excel workbook (by profile, site, module, date range, or free text), and /stats, which replies instantly with total checkouts, total spend, average order value, and top profiles/sites.",
-          "It turned a scroll-and-guess chat log into a queryable record of what I bought, for how much, and on which profile.",
         ],
       },
     ];
